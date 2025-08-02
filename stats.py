@@ -3,7 +3,7 @@ def count_words(book_contents):
     counter = 0
     for word in words:
         counter += 1
-    return f"{counter} words found in the document"
+    return counter
 
 
 def count_characters(book_contents):
@@ -15,3 +15,21 @@ def count_characters(book_contents):
         else:
             char_dict[char] = 1
     return char_dict
+
+
+def sort_on(dict):
+    return dict["count"]
+
+
+def convert_dict_to_list(char_dict):
+    new_list = []
+    for char in char_dict:
+        if not char.isalpha():
+            continue
+
+        temp_dict = {}
+        temp_dict["char"] = char
+        temp_dict["count"] = char_dict[char]
+        new_list.append(temp_dict)
+    new_list.sort(reverse=True, key=sort_on)
+    return new_list
