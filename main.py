@@ -1,6 +1,8 @@
 from stats import count_words
 from stats import count_characters
 from stats import convert_dict_to_list
+from pathlib import Path
+import sys
 
 
 def get_book_text(file_path):
@@ -10,7 +12,18 @@ def get_book_text(file_path):
 
 
 def main():
-    book_path = "books/frankenstein.txt"
+    if not len(sys.argv) == 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+        return
+
+    book_path = sys.argv[1]
+
+    if not Path(book_path).is_file():
+        print(f"the path '{book_path}' is invalid, please recheck")
+        sys.exit(1)
+        return
+
     book_contents = get_book_text(book_path)
     num_words = count_words(book_contents)
     char_dict = count_characters(book_contents)
@@ -28,6 +41,8 @@ def main():
     for dict in char_list:
         print(f"{dict["char"]}: {dict["count"]}")
     print("============= END ===============")
+
+    sys.exit(0)
 
 
 main()
